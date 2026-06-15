@@ -21,42 +21,53 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom premium CSS for dark theme and glowing elements
+# Custom premium CSS for light theme and clean modern UI
 st.markdown("""
 <style>
-    /* Main container styling */
-    .main {
-        background-color: #0e1117;
-        color: #ffffff;
+    /* Main app background */
+    .stApp {
+        background-color: #f8fafc;
+        color: #0f172a;
     }
-    /* Sleek headers */
-    h1, h2, h3, h4 {
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff !important;
+        border-right: 1px solid #e2e8f0;
+    }
+    [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] label {
+        color: #334155 !important;
+    }
+    /* Headers */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Outfit', 'Inter', sans-serif !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
         letter-spacing: -0.5px;
     }
     .main-title {
-        background: linear-gradient(90deg, #ff4b4b, #ff8f8f);
+        background: linear-gradient(90deg, #2563eb, #7c3aed);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-size: 3rem;
+        font-weight: 800;
         margin-bottom: 0.5rem;
         text-align: center;
     }
     .subtitle {
-        color: #a3a8b4;
+        color: #475569;
         text-align: center;
         margin-bottom: 2rem;
         font-size: 1.1rem;
+        font-weight: 500;
     }
     /* Card design */
     .card {
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
+        background: #ffffff;
+        border-radius: 16px;
         padding: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid #e2e8f0;
         margin-bottom: 20px;
-        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
     /* Glowing digit container */
     .glowing-digit-container {
@@ -65,24 +76,41 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         height: 200px;
-        border-radius: 12px;
-        background: radial-gradient(circle, rgba(255, 75, 75, 0.15) 0%, rgba(14, 17, 23, 0) 70%);
-        border: 1px dashed rgba(255, 75, 75, 0.3);
+        border-radius: 16px;
+        background: rgba(37, 99, 235, 0.05);
+        border: 1px dashed rgba(37, 99, 235, 0.3);
         margin-bottom: 20px;
     }
     .glowing-digit {
-        font-size: 6rem;
+        font-size: 6.5rem;
         font-weight: 800;
-        color: #ff4b4b;
-        text-shadow: 0 0 20px rgba(255, 75, 75, 0.8), 0 0 40px rgba(255, 75, 75, 0.4);
+        color: #2563eb;
+        text-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
         line-height: 1;
     }
     .digit-label {
-        font-size: 0.9rem;
-        color: #8892b0;
+        font-size: 0.85rem;
+        color: #64748b;
         text-transform: uppercase;
         letter-spacing: 2px;
         margin-top: 10px;
+        font-weight: 600;
+    }
+    /* Tab headers */
+    button[data-baseweb="tab"] {
+        color: #64748b !important;
+        font-weight: 600 !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #2563eb !important;
+        border-bottom-color: #2563eb !important;
+    }
+    /* Style the canvas drawing area */
+    div[data-testid="stCanvas"] {
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 </style>
 """, unsafe_allow_html=True)
