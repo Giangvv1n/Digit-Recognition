@@ -46,8 +46,25 @@ def load_data(data_dir="data", val_size=0.1, random_state=42):
             X_test = X_val
             
     else:
-        print("Kaggle train.csv not found. Falling back to official Keras MNIST dataset...")
-        (X_train_raw, y_train_raw), (X_test_raw, y_test_raw) = mnist.load_data()
+        mnist_local_path = os.path.join(data_dir, "mnist.npz")
+        if os.path.exists(mnist_local_path):
+            print(f"Loading local MNIST dataset from cache: {mnist_local_path}...")
+            cached_data = np.load(mnist_local_path)
+            X_train_raw = cached_data['X_train']
+            y_train_raw = cached_data['y_train']
+            X_test_raw = cached_data['X_test']
+            y_test_raw = cached_data['y_test']
+        else:
+            print("Local mnist.npz not found. Downloading official Keras MNIST dataset...")
+            (X_train_raw, y_train_raw), (X_test_raw, y_test_raw) = mnist.load_data()
+            print(f"Saving MNIST dataset locally to {mnist_local_path}...")
+            np.savez_compressed(
+                mnist_local_path, 
+                X_train=X_train_raw, 
+                y_train=y_train_raw, 
+                X_test=X_test_raw, 
+                y_test=y_test_raw
+            )
         
         # Add channel dimension
         X_train_all = X_train_raw.reshape(-1, 28, 28, 1).astype('float32') / 255.0
