@@ -9,6 +9,7 @@ import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 import tensorflow as tf
 import scipy.ndimage as ndimage
+import streamlit.components.v1 as components
 
 # Adjust sys.path to find modules in src/
 sys.path.append(os.path.abspath('src'))
@@ -204,8 +205,7 @@ st.markdown("""
         padding: 16px;
     }
     iframe {
-        background-color: #000000 !important; /* Set canvas background to black */
-        filter: invert(1) hue-rotate(180deg) !important; /* INVERT: yields white canvas, black stroke, and dark high-contrast buttons */
+        background-color: #ffffff !important; /* Set canvas background wrapper to white */
         border-radius: 10px;
     }
 </style>
@@ -686,6 +686,79 @@ def main():
                         st.info(f"Confusion matrix for {name} not found. Please run training first.")
         else:
             st.info("Performance comparison data not found. Please click the training button in the left sidebar to train and generate reports.")
+
+    # Inject Javascript to style the canvas iframe buttons (blue by default, red on hover)
+    components.html("""
+    <script>
+        const injectCSS = () => {
+            try {
+                const parentDoc = window.parent.document;
+                const iframes = parentDoc.querySelectorAll('iframe');
+                iframes.forEach(iframe => {
+                    const src = iframe.src || '';
+                    const title = iframe.title || '';
+                    if (
+                        src.includes('streamlit_drawable_canvas') || 
+                        title.includes('streamlit_drawable_canvas') ||
+                        src.includes('st_canvas') ||
+                        title.includes('st_canvas')
+                    ) {
+                        try {
+                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                            if (iframeDoc) {
+                                if (!iframeDoc.getElementById('custom-canvas-styles')) {
+                                    const style = iframeDoc.createElement('style');
+                                    style.id = 'custom-canvas-styles';
+                                    style.innerHTML = `
+                                        body {
+                                            background-color: #ffffff !important;
+                                        }
+                                        /* Style the canvas toolbar images as high-contrast buttons */
+                                        img[class*="CanvasToolbar_enabled"] {
+                                            filter: invert(31%) sepia(74%) saturate(5776%) hue-rotate(219deg) brightness(95%) contrast(97%) !important; /* Blue color filter (#2563eb) */
+                                            background-color: rgba(37, 99, 235, 0.08) !important;
+                                            border-radius: 8px !important;
+                                            padding: 6px !important;
+                                            margin: 4px 6px !important;
+                                            cursor: pointer !important;
+                                            transition: all 0.2s ease !important;
+                                            display: inline-block !important;
+                                            height: 24px !important;
+                                            width: 24px !important;
+                                        }
+                                        img[class*="CanvasToolbar_enabled"]:hover {
+                                            filter: invert(38%) sepia(84%) saturate(5043%) hue-rotate(338deg) brightness(96%) contrast(97%) !important; /* Red color filter (#ef4444) */
+                                            background-color: rgba(239, 68, 68, 0.15) !important;
+                                            transform: scale(1.15) !important;
+                                        }
+                                        img[class*="CanvasToolbar_disabled"] {
+                                            filter: grayscale(1) !important;
+                                            opacity: 0.25 !important;
+                                            background-color: transparent !important;
+                                            border-radius: 8px !important;
+                                            padding: 6px !important;
+                                            margin: 4px 6px !important;
+                                            cursor: not-allowed !important;
+                                            display: inline-block !important;
+                                            height: 24px !important;
+                                            width: 24px !important;
+                                        }
+                                    `;
+                                    iframeDoc.head.appendChild(style);
+                                }
+                            }
+                        } catch (err) {
+                            // Suppress errors
+                        }
+                    }
+                });
+            } catch (globalErr) {
+                // Suppress errors
+            }
+        };
+        setInterval(injectCSS, 1000);
+    </script>
+    """, height=0, width=0)
 
 if __name__ == "__main__":
     main()
