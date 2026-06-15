@@ -167,10 +167,8 @@ st.markdown("""
         border-radius: 12px !important;
         border: 1px solid #e2e8f0 !important;
     }
-    [data-testid="stRadio"] div[role="radiogroup"] label {
-        background-color: transparent !important;
-        padding: 6px 12px !important;
-        border-radius: 8px !important;
+    [data-testid="stRadio"] div[role="radiogroup"] label * {
+        color: #0f172a !important; /* Force all child elements of radio options to be dark slate */
         font-weight: 500 !important;
     }
     
@@ -203,9 +201,9 @@ st.markdown("""
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         background-color: #ffffff !important; /* Keep outer padding white */
-        padding: 16px 16px 8px 16px;
+        padding: 16px;
     }
-    div[data-testid="stCanvas"] iframe {
+    iframe {
         background-color: #000000 !important; /* Set canvas background to black */
         filter: invert(1) hue-rotate(180deg) !important; /* INVERT: yields white canvas, black stroke, and dark high-contrast buttons */
         border-radius: 10px;
