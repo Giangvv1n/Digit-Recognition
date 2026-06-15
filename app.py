@@ -105,12 +105,18 @@ st.markdown("""
         color: #2563eb !important;
         border-bottom-color: #2563eb !important;
     }
-    /* Style the canvas drawing area */
+    /* Style the canvas drawing area and toolbar container */
     div[data-testid="stCanvas"] {
         border: 2px solid #e2e8f0;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        background-color: #1e293b !important; /* Dark slate background */
+        padding: 16px 16px 8px 16px;
+    }
+    div[data-testid="stCanvas"] iframe {
+        background-color: #1e293b !important; /* Match iframe background to show white buttons */
+        border-radius: 8px;
     }
 </style>
 """, unsafe_allow_html=True)
