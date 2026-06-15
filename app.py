@@ -36,6 +36,7 @@ st.markdown("""
     }
     [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] label {
         color: #334155 !important;
+        font-weight: 600;
     }
     /* Headers */
     h1, h2, h3, h4, h5, h6 {
@@ -105,18 +106,109 @@ st.markdown("""
         color: #2563eb !important;
         border-bottom-color: #2563eb !important;
     }
-    /* Style the canvas drawing area and toolbar container */
+    
+    /* OVERRIDE STREAMLIT WIDGETS FOR HIGH CONTRAST & PREMIUM LIGHT THEME */
+    
+    /* 1. Buttons (e.g., Retrain button) */
+    .stButton > button {
+        background-color: #2563eb !important;
+        color: #ffffff !important;
+        border: 1px solid #2563eb !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        padding: 8px 20px !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.15), 0 2px 4px -1px rgba(37, 99, 235, 0.1) !important;
+        width: 100% !important;
+    }
+    .stButton > button:hover {
+        background-color: #1d4ed8 !important;
+        border-color: #1d4ed8 !important;
+        color: #ffffff !important;
+        box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.15) !important;
+        transform: translateY(-1px) !important;
+    }
+    .stButton > button:active {
+        transform: translateY(0px) !important;
+    }
+    
+    /* 2. File Uploader styling */
+    [data-testid="stFileUploader"] {
+        border: 2px dashed #cbd5e1 !important;
+        border-radius: 16px !important;
+        background-color: #f8fafc !important;
+        padding: 20px !important;
+        transition: border-color 0.2s ease !important;
+    }
+    [data-testid="stFileUploader"]:hover {
+        border-color: #94a3b8 !important;
+    }
+    [data-testid="stFileUploader"] section button {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    }
+    [data-testid="stFileUploader"] section button:hover {
+        background-color: #f1f5f9 !important;
+        border-color: #94a3b8 !important;
+    }
+    
+    /* 3. Radio Buttons */
+    [data-testid="stRadio"] label {
+        color: #334155 !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stRadio"] div[role="radiogroup"] {
+        background-color: #f1f5f9 !important;
+        padding: 8px !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+    [data-testid="stRadio"] div[role="radiogroup"] label {
+        background-color: transparent !important;
+        padding: 6px 12px !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+    }
+    
+    /* 4. Sliders */
+    [data-testid="stSlider"] label {
+        color: #334155 !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stSlider"] div[role="slider"] {
+        background-color: #2563eb !important;
+    }
+    
+    /* 5. Selectboxes */
+    [data-testid="stSelectbox"] label {
+        color: #334155 !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stSelectbox"] div[data-baseweb="select"] {
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+        color: #0f172a !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    }
+    
+    /* 6. Style the canvas drawing area and toolbar container */
     div[data-testid="stCanvas"] {
         border: 2px solid #e2e8f0;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        background-color: #1e293b !important; /* Dark slate background */
+        background-color: #ffffff !important; /* Keep outer padding white */
         padding: 16px 16px 8px 16px;
     }
     div[data-testid="stCanvas"] iframe {
-        background-color: #1e293b !important; /* Match iframe background to show white buttons */
-        border-radius: 8px;
+        background-color: #000000 !important; /* Set canvas background to black */
+        filter: invert(1) hue-rotate(180deg) !important; /* INVERT: yields white canvas, black stroke, and dark high-contrast buttons */
+        border-radius: 10px;
     }
 </style>
 """, unsafe_allow_html=True)
